@@ -103,7 +103,7 @@ static int test_count (_xs_magic_object_test_t *t) {
 	return ++t->i;
 }
 
-static int test_DESTROY (_xs_magic_object_test_t *t) {
+static void test_DESTROY (_xs_magic_object_test_t *t) {
 	Safefree(t);
 	destroyed++;
 }
