@@ -1,3 +1,6 @@
+0.03    Sun, 17 Apr 2011 17:13:41 +0200
+	- Make the examples in the docs C89-compliant (Emmanuel Rodriguez).
+
 0.02
 	- the header no longer includes ppport.h
 	- add missing aTHX_
