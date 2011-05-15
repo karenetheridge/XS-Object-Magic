@@ -27,6 +27,47 @@ void xs_object_magic_attach_struct (pTHX_ SV *sv, void *ptr) {
     sv_magicext(sv, NULL, PERL_MAGIC_ext, &null_mg_vtbl, ptr, 0 );
 }
 
+int xs_object_magic_detach_struct (pTHX_ SV *sv, void *ptr) {
+    MAGIC *mg, *prevmagic, *moremagic = NULL;
+    int removed = 0;
+
+    if (SvTYPE(sv) < SVt_PVMG)
+        return 0;
+
+    /* find our magic, remembering the magic before and the magic after */
+    for (prevmagic = NULL, mg = SvMAGIC(sv); mg; prevmagic = mg, mg = moremagic) {
+        moremagic = mg->mg_moremagic;
+        if (mg->mg_type == PERL_MAGIC_ext &&
+            mg->mg_virtual == &null_mg_vtbl &&
+            ( ptr == NULL || mg->mg_ptr == ptr )) {
+
+            if(prevmagic != NULL) {
+                prevmagic->mg_moremagic = moremagic;
+            }
+            else {
+                SvMAGIC_set(sv, moremagic);
+            }
+
+            mg->mg_moremagic = NULL;
+            Safefree(mg);
+
+            mg = prevmagic;
+            removed++;
+        }
+
+    }
+
+    return removed;
+}
+
+int xs_object_magic_detach_struct_rv (pTHX_ SV *sv, void *ptr){
+    if(sv && SvROK(sv)) {
+        sv = SvRV(sv);
+        return xs_object_magic_detach_struct(aTHX_ sv, ptr);
+    }
+    return 0;
+}
+
 SV *xs_object_magic_create (pTHX_ void *ptr, HV *stash) {
 	HV *hv = newHV();
 	SV *obj = newRV_noinc((SV *)hv);
@@ -142,6 +183,36 @@ test_has (self)
                         XSRETURN_YES;
 
                 XSRETURN_NO;
+
+void
+test_attach_again (self)
+        SV *self
+        void *s = xs_object_magic_get_struct_rv(aTHX_ self);
+        CODE:
+                xs_object_magic_attach_struct(aTHX_ SvRV(self), s );
+
+int
+test_detach_null (self)
+        SV *self;
+        CODE:
+                RETVAL = xs_object_magic_detach_struct_rv(aTHX_ self, NULL);
+        OUTPUT: RETVAL
+
+int
+test_detach_struct (self)
+        SV *self;
+        void *s = xs_object_magic_get_struct_rv(aTHX_ self);
+        CODE:
+                RETVAL = xs_object_magic_detach_struct_rv(aTHX_ self, s);
+        OUTPUT: RETVAL
+
+int
+test_detach_garbage (self)
+        SV *self;
+        void *s = (void *) 0x123456;
+        CODE:
+                RETVAL = xs_object_magic_detach_struct_rv(aTHX_ self, s);
+        OUTPUT: RETVAL
 
 void
 test_DESTROY (self)
