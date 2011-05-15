@@ -13,6 +13,7 @@ requires_external_cc;
 
 requires 'parent';
 configure_requires 'ExtUtils::Depends' => 0.302; #minimum version that works on Win32+gcc
+test_requires 'Test::Fatal';
 test_requires 'Test::More';
 test_requires 'Test::use::ok';
 test_requires 'Scalar::Util';

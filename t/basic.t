@@ -3,7 +3,8 @@
 use strict;
 use warnings;
 
-use Test::More tests => 10;
+use Test::More tests => 11;
+use Test::Fatal;
 
 use Scalar::Util qw(reftype);
 
@@ -28,3 +29,11 @@ is( XS::Object::Magic::Test::destroyed(), 0, "not yet destroyed" );
 undef $o;
 
 is( XS::Object::Magic::Test::destroyed(), 1, "destroyed" );
+
+no warnings 'redefine';
+*XS::Object::Magic::Test::DESTROY = sub {};
+
+my $bad = bless {}, 'XS::Object::Magic::Test';
+
+like( exception { $bad->count }, qr/does not have a struct/,
+      "methods that need a struct die when there isn't one" );
