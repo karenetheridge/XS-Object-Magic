@@ -38,7 +38,7 @@ SV *xs_object_magic_create (pTHX_ void *ptr, HV *stash) {
 	return obj;
 }
 
-STATIC MAGIC *xs_object_magic_get_mg (pTHX_ SV *sv) {
+MAGIC *xs_object_magic_get_mg (pTHX_ SV *sv) {
     MAGIC *mg;
 
     if (SvTYPE(sv) >= SVt_PVMG) {
