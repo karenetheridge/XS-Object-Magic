@@ -6,6 +6,8 @@
 START_EXTERN_C
 
 void xs_object_magic_attach_struct (pTHX_ SV *obj, void *ptr);
+int xs_object_magic_has_struct (pTHX_ SV *sv);
+int xs_object_magic_has_struct_rv (pTHX_ SV *sv);
 void *xs_object_magic_get_struct (pTHX_ SV *sv);
 void *xs_object_magic_get_struct_rv (pTHX_ SV *sv);
 void *xs_object_magic_get_struct_rv_pretty (pTHX_ SV *sv, const char *name);

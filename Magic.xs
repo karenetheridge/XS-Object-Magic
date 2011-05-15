@@ -56,6 +56,20 @@ MAGIC *xs_object_magic_get_mg (pTHX_ SV *sv) {
     return NULL;
 }
 
+int xs_object_magic_has_struct (pTHX_ SV *sv) {
+	MAGIC *mg = xs_object_magic_get_mg(aTHX_ sv);
+	return mg ? 1 : 0;
+}
+
+int xs_object_magic_has_struct_rv (pTHX_ SV *sv) {
+	if( sv && SvROK(sv) ){
+		sv = SvRV(sv);
+		MAGIC *mg = xs_object_magic_get_mg(aTHX_ sv);
+		return mg ? 1 : 0;
+	}
+	return 0;
+}
+
 void *xs_object_magic_get_struct (pTHX_ SV *sv) {
 	MAGIC *mg = xs_object_magic_get_mg(aTHX_ sv);
 
@@ -119,6 +133,15 @@ new(char *class)
 I32
 test_count (self)
 	_xs_magic_object_test_t *self;
+
+void
+test_has (self)
+        SV *self;
+        PPCODE:
+                if (xs_object_magic_has_struct_rv(aTHX_ self))
+                        XSRETURN_YES;
+
+                XSRETURN_NO;
 
 void
 test_DESTROY (self)
