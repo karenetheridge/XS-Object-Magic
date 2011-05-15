@@ -82,9 +82,7 @@ void *xs_object_magic_get_struct_rv (pTHX_ SV *sv) {
 	return xs_object_magic_get_struct_rv_pretty(aTHX_ sv, "argument");
 }
 
-
-
-
+/* stuff for the test follows */
 
 typedef struct {
 	I32 i;
