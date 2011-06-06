@@ -1,3 +1,4 @@
+0.04   Mon, 06 Jun 2011 16:21:57 +0200
     - Add xs_object_magic_detach_struct to remove attached structs.
     - Add xs_object_magic_has_struct and xs_object_magic_has_struct_rv as
       predicate methods.
