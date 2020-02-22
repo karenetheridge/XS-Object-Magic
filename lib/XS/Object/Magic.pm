@@ -7,7 +7,7 @@ use warnings;
 require 5.008001;
 use parent qw(DynaLoader);
 
-our $VERSION = '0.05';
+our $VERSION = '0.06';
 
 sub dl_load_flags { 0x01 }
 
