@@ -1,6 +1,6 @@
 Revision history for XS-Object-Magic
 
-{{$NEXT}}
+0.05      2020-02-22 18:52:33Z
     - convert packaging from Module::Install to Dist::Zilla
     - documentation fixes (rafl GH#1, Jonathan Rockaway)
 
