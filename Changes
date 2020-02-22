@@ -1,3 +1,8 @@
+Revision history for XS-Object-Magic
+
+{{$NEXT}}
+    - convert packaging from Module::Install to Dist::Zilla
+
 0.04    2011-06-06 14:21:57Z
     - Add xs_object_magic_detach_struct to remove attached structs.
     - Add xs_object_magic_has_struct and xs_object_magic_has_struct_rv as

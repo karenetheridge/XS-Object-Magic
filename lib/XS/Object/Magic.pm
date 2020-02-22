@@ -1,4 +1,5 @@
 package XS::Object::Magic;
+# ABSTRACT: Opaque, extensible XS pointer backed objects using C<sv_magic>
 
 use strict;
 use warnings;
@@ -17,10 +18,6 @@ __PACKAGE__
 __END__
 
 =pod
-
-=head1 NAME
-
-XS::Object::Magic - Opaque, extensible XS pointer backed objects using C<sv_magic>
 
 =head1 SYNOPSIS
 
@@ -234,19 +231,4 @@ and then you can use C<my_pointer_t> as the argument type of the invocant:
 Note that there is no C<OUTPUT> conversion. In order to return your object you
 need to use C<ST(0)> or some other means of getting the invocant.
 
-=head1 VERSION CONTROL
-
-L<http://github.com/nothingmuch/xs-object-magic>
-
-=head1 AUTHOR
-
-Florian Ragwitz, Yuval Kogman
-
-=head1 COPYRIGHT & LICENSE
-
-	Copyright (c) 2009 Florian Ragwitz, Yuval Kogman. All rights reserved
-	This program is free software; you can redistribute
-	it and/or modify it under the same terms as Perl itself.
-
 =cut
-
