@@ -94,9 +94,9 @@ __END__
 			 * still return a pointe which is now invalid */
 
 
-=head1 DESCRPTION
+=head1 DESCRIPTION
 
-This way of associating structs with Perl space objects is designed to supercede
+This way of associating structs with Perl space objects is designed to supersede
 Perl's builtin C<T_PTROBJ> with something that is designed to be:
 
 =over 4
@@ -119,6 +119,8 @@ C<T_PTROBJ> (e.g. C<$$ptr_obj = 0>).
 =back
 
 =head1 C API
+
+=for stopwords SV HV
 
 =over 4
 
